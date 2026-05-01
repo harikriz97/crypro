@@ -11,7 +11,7 @@ import os
 import time
 
 # ── Config ──────────────────────────────────────────────
-MAX_BARS   = 9_999_999          # request max bars — broker returns what it has
+MAX_BARS   = 50_000          # request max bars — broker returns what it has
 OUTPUT_DIR = "data/mt5"
 
 TIMEFRAMES = {
@@ -37,9 +37,28 @@ def connect():
 
 def get_all_symbols():
     symbols = mt5.symbols_get()
-    active = [s.name for s in symbols if s.visible or s.select]
-    print(f"Total symbols found: {len(symbols)} | Active/visible: {len(active)}")
-    return [s.name for s in symbols]
+    
+    # Filter for:
+    # 1. Forex: path contains 'Forex'
+    # 2. Gold: name contains 'XAU'
+    # 3. Oil: name is 'USOIL' or 'UKOIL'
+    # 4. Futures: path contains 'Futures'
+    
+    filtered = []
+    for s in symbols:
+        name = s.name.upper()
+        path = s.path.upper()
+        
+        is_forex   = "FOREX" in path
+        is_gold    = "XAU" in name
+        is_oil     = name in ["USOIL", "UKOIL"]
+        is_futures = "FUTURES" in path
+        
+        if is_forex or is_gold or is_oil or is_futures:
+            filtered.append(s.name)
+            
+    print(f"Total symbols found: {len(symbols)} | Filtered (Forex/Gold/Oil/Futures): {len(filtered)}")
+    return filtered
 
 
 def download(symbol, tf_name, tf_const):
@@ -104,9 +123,9 @@ def main():
             if df is not None:
                 path = save(df, symbol, tf_name)
                 sym_any_data = True
-                print(f"[{i}/{total}] {symbol} {tf_name:>3} — {len(df):>6} bars → {path}")
+                print(f"[{i}/{total}] {symbol} {tf_name:>3} - {len(df):>6} bars -> {path}")
             else:
-                print(f"[{i}/{total}] {symbol} {tf_name:>3} — no data, skip")
+                print(f"[{i}/{total}] {symbol} {tf_name:>3} - no data, skip")
                 skipped += 1
 
         if sym_any_data:
