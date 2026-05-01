@@ -81,8 +81,6 @@ SYMBOLS = {
 # History limits: 15m/30m=60d, 1H=730d, 1D=max
 
 TF_NATIVE = {
-    "15m": {"interval": "15m", "period": "60d"},
-    "30m": {"interval": "30m", "period": "60d"},
     "1H" : {"interval": "1h",  "period": "730d"},
     "1D" : {"interval": "1d",  "period": "max"},
 }
