@@ -43,6 +43,9 @@ def get_all_symbols():
 
 
 def download(symbol, tf_name, tf_const):
+    # Enable symbol in Market Watch before fetching
+    mt5.symbol_select(symbol, True)
+
     # copy_rates_from_pos(symbol, tf, start_pos=0, count) → oldest bar first
     rates = mt5.copy_rates_from_pos(symbol, tf_const, 0, MAX_BARS)
     if rates is None or len(rates) == 0:
