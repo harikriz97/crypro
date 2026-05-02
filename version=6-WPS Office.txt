@@ -1,0 +1,79 @@
+﻿//@version=6
+
+indicator ("BNF MRC", overlay=true)
+
+//=== Input Panel ===
+
+rangeValue input.float(500.8, title="Range Value from Open", step=0.05) showLines input.bool(true, title="Show LeveLs?")
+
+// === Style ===
+
+lineColor color.rgb(25, 21, 238)
+
+openLineColor color.orange
+
+lineStyle line.style_solid
+
+linewidth 2
+
+//=== Variables ===
+
+var float openPrice na
+
+var line[] upLines array.new_line()
+
+var Line openLine na // open price Line variab le
+
+var line downLines array.new_line()
+
+//=== Detect new day ===
+
+newDay ta.change(time("D")) != 0
+
+//=== On new day logic===
+
+if newDay
+
+openPrice: open
+
+// Clear previous lines (only if array is not empty)
+
+1f array.size(upLines) >
+
+for 10 to array.size (upLines) 1 line.delete(array.get(upLines, 1))
+
+if array.size(downLines) > 0 for 10 to array.size(downLines) 1 line.delete(array.get(downLines, 1))
+
+if not na(openLine) line.delete(openLine)
+
+array.clear(upLines)
+
+array.clear(downLines)
+
+// Draw new Lines
+
+if showLines
+
+// Draw Open Line
+
+openLine y2=openPrice,
+
+line.new(x1=bar_index, y1=openPrice, x2=bar_index + 1, color=openLineColor, style=lineStyle, width=lineWidth,
+
+extend=extend.right)
+
+for 11 to 15
+
+Leve LUp openPrice +1 rangeValue
+
+Leve LDn openPrice1 rangeva Lue
+
+LUp line.new(x1=bar_index, y1=levelUp, x2=bar index + 1, y2=levelUp, color-lineColor, style=lineStyle, width=lineWidth,
+
+extend extend.right)
+
+array.push(upLines, LUp)
+
+extend extend.right)
+
+LDnline.new(x1=bar_index, y1=levelDn, x2=bar_index 1, y2=levelDn, color LineColor, style=lineStyle, width=lineWidth,

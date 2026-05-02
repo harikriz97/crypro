@@ -1,0 +1,23 @@
+BankNifty Strategy:
+===================
+1. Take previous day high and low of BANKNIFTY FUTURES in HeinkenAshi Candle
+2. Draw Gann box or Fibbonacci level from high to low
+   whichever u choose should have following levels in it:
+   0%    or 0 line
+   25%    or 0.25 line
+   38.2%  or 0.382 line
+   50%    or 0.5 line
+   61.8%  or 0.618 line
+   75%    or 0.75 line
+   100%    or 1 line
+   
+ My suggestion is to create excel sheet and just input high and low of previous day and calculate remaining values there itself. 
+    No need of gann box drawing or fibbonacci then.
+
+3. 50% or 0.5 line is the middle line where the BN price should trade to enter either buy or sell
+
+4. Buy once BN crosses above 38.2% or 0.382 line. SL = 50% or 0.5 line... Targets: 25% or 0.25 line and then 0 line.
+
+5. Sell once BN crosses below 61.8% or 0.618 line. SL = 50% or 0.5 line... Targets: 75% or 0.75 line and then 1 line.
+
+**** Important: All this using Heiken ashi candle and in 5mins TF
